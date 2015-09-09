@@ -4,12 +4,12 @@ Second WDI Project
 
 Technologies used:
 HTML/CSS, Javascript, PostgreSQL & Node JS. I used the following NPMs:
-1. express
-2. path
-3. express-handlebars
-4. body-parser
-5. method-override
-6. postgresql
+- express
+- path
+- express-handlebars
+- body-parser
+- method-override
+- postgresql
 
 The application is an internally facing wikipedia page for my hypothetical customer "Henrietta the business magnate". The web application stores and displays articles about mobile applications. The application is a human resource initiative to let users share common apps that are used within the organization. 
 
