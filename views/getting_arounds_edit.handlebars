@@ -1,0 +1,10 @@
+<div id="container">
+	<form action="/getting_arounds/{{id}}" method="POST">
+		<input type="hidden" name="_method" value="PUT">
+		<textarea name="name" placeholder="Name of App">{{name}}</textarea>
+		<textarea name="description" placeholder="Description">{{description}}</textarea>
+		<textarea name="features" placeholder="Features">{{features}}</textarea>
+		<textarea name="author" placeholder="Author">{{author}}</textarea>
+		<input type="submit" value="EDIT">
+	</form>
+</div>

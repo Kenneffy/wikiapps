@@ -1,0 +1,9 @@
+INSERT INTO food_drinks (name, description, features, author) VALUES ('Yalp', 'Pretty cool app, lets me find all the nearby restaurants and bars', 'Gives search filters that pinpoint exactly what you want', 'Smith');
+INSERT INTO food_drinks (name, description, features, author) VALUES ('GrubFood', 'Delivery and takeout app that lets you order food from the comfort of your own home', 'Gives you a list of all the restaurants that participate with GrubFood, gives you their full menu!', 'Cookie');
+INSERT INTO food_drinks (name, description, features, author) VALUES ('BarHop', 'Having trouble finding your next spot? Check out BarHop!', 'Shows you all the popping spots around you so your night will never have a dull moment!', 'Cake');
+INSERT INTO getting_arounds (name, description, features, author) VALUES ('Bluuber', 'Need a ride home and not willing to pay these NYC taxi prices? Check out Uber!', 'Your Bluuber driver will find your location and scoop you within 10 minutes!', 'Ginger');
+INSERT INTO getting_arounds (name, description, features, author) VALUES ('HopStep', 'Dont know how to ride the subway? HopStep will help you make up for all your shortcomings!', 'Shows you the most efficient routes to take to go home', 'Sandwich');
+INSERT INTO getting_arounds (name, description, features, author) VALUES ('Frugal Maps', 'An overall useful app to have when youre on the go', 'Gives you accurate information on your surroundings', 'Milkshake');
+INSERT INTO meeting_peoples (name, description, features, author) VALUES ('Tingler', 'Looking to spice up your night? Bring on the swipping!', 'Gives you matches according to your surroundings', 'Harry');
+INSERT INTO meeting_peoples (name, description, features, author) VALUES ('GymMates', 'Trying to lift at the gym but too scared to approach someone for a spot? Try out Tinder for bros!', 'Matches up bros who are at the gym and need a lifting partner', 'Chad');
+
