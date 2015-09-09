@@ -29,12 +29,17 @@ app.listen(3000);
 
 var connectionString = "pg://localhost/wikiapps_db";
 
+//route for home page
 app.get('/', function (req, res){
 	res.render('home');
-})
+});
+
+//route for rendering new article handlebar
 app.get('/newarticle', function (req, res){
-		res.render('newarticle')
-})
+	res.render('newarticle');
+});
+
+//route for sending a newly created article to a specific category
 app.post('/newarticle', function (req, res){
 		if (req.body.tablename == 'meeting_peoples') {
 			var name = req.body.name;
@@ -71,10 +76,180 @@ app.post('/newarticle', function (req, res){
 			});
 		}
 });
-//search bar
-//below is the search bar for attempt#1
-app.put('/searchbar', function (req, res){
-	var search = req.body.search 
+
+//route for displaying all articles on food drinks
+app.get('/food_drinks', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM food_drinks', function (err, result){
+			done();
+			var data = {
+				food_drinks : result.rows
+			};
+			res.render('food_drinks', data);
+		});
+	});
+});
+
+//route for displaying all information on a particular article
+app.get('/food_drinks/mainpage/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		// var apple = parseInt(req.params.id) + 1
+		client.query('SELECT * FROM food_drinks WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('food_drinks_mainpage', data);
+			console.log(req.query)
+		});
+	});
+});
+
+//route for displaying all article information ready to be edited 
+app.get('/food_drinks/edit/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+
+		client.query('SELECT * FROM food_drinks WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('food_drinks_edit', data);
+		});
+	});
+});
+
+//route for updating information about an article 
+app.put('/food_drinks/:id', function (req, res){
+	var id = req.params.id;
+	var name = req.body.name;
+	var description = req.body.description;
+	var features = req.body.features;
+	var author = req.body.author;
+	pg.connect(connectionString, function (err, client, done) {
+		client.query('UPDATE food_drinks SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', [name, description, features, author, id], function (err, result){
+			done();
+			res.redirect('/food_drinks')
+		});
+	});
+});
+
+//route for displaying all articles on getting around
+app.get('/getting_arounds', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM getting_arounds', function (err, result){
+			done();
+			var data = {
+				getting_arounds : result.rows
+			};
+			res.render('getting_arounds', data);
+		});
+	});
+});
+
+//route for displaying all information on a particular article
+app.get('/getting_arounds/mainpage/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM getting_arounds WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('getting_arounds_mainpage', data);
+		});
+	});
+});
+
+//route for displaying all article information ready to be edited 
+app.get('/getting_arounds/edit/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM getting_arounds WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('getting_arounds_edit', data);
+		});
+	});
+});
+
+//route for updating information about an article 
+app.put('/getting_arounds/:id', function (req, res){
+	var id = req.params.id;
+	var name = req.body.name;
+	var description = req.body.description;
+	var features = req.body.features;
+	var author = req.body.author;	
+	pg.connect(connectionString, function (err, client, done){
+		client.query('UPDATE getting_arounds SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', [name, description, features, author, id], function (err, result){
+			done();
+			res.redirect('/getting_arounds');
+		});
+	});
+});
+
+//route for displaying all articles on meeting people
+app.get('/meeting_peoples', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM meeting_peoples', function (err, result){
+			done();
+			var data = {
+				meeting_peoples : result.rows
+			};
+			res.render('meeting_peoples', data);
+		});
+	});
+});
+
+//route for displaying all information on a particular article
+app.get('/meeting_peoples/mainpage/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM meeting_peoples WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('meeting_peoples_mainpage', data);
+		});
+	});
+});
+
+//route for displaying all article information ready to be edited 
+app.get('/meeting_peoples/edit/:id', function (req, res){
+	pg.connect(connectionString, function (err, client, done){
+		client.query('SELECT * FROM meeting_peoples WHERE id=$1', [req.params.id], function (err, result){
+			done();
+			var data = result.rows[0];
+			res.render('meeting_peoples_edit', data);
+		});
+	});
+});
+
+//route for updating information about an article 
+app.put('/meeting_peoples/:id', function (req, res){
+	var id = req.params.id;
+	var name = req.body.name;
+	var description = req.body.description;
+	var features = req.body.features;
+	var author = req.body.author;
+	pg.connect(connectionString, function (err, client, done) {
+		client.query(
+			'UPDATE meeting_peoples SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', 
+			[name, description, features, author, id], 
+			function (err, result){
+				done();
+			//trying to use sendgrid module
+			var payload  = new sendgrid.Email({
+			  to      : 'kenneth_yee2@yahoo.com',
+			  from    : 'kenneth_yee2@yahoo.com',
+			  subject : 'Saying Hi',
+			  text    : 'This is my first email through SendGrid'
+			});
+			sendgrid.send(payload, function(err, json) {
+			  if (err) { console.error(err); }
+			  console.log(json);
+			});	
+			res.redirect('/meeting_peoples');
+			}
+		);
+	});
+});
+
+
+//Work on this in the future
+//Attempt to making search bar
+// app.put('/searchbar', function (req, res){
+// 	var search = req.body.search 
 	//pg.connect(connectionString, function (err, client, done) {
 		//client.query('SELECT * FROM food_drinks, getting_arounds, meeting_peoples', function (err, result){
 	  // 		 done();
@@ -96,175 +271,28 @@ app.put('/searchbar', function (req, res){
 	// }
 	// console.log(poo)
 	// console.log(search)
-
-	res.redirect('/searchresults')
-});	
+	// res.redirect('/searchresults')
+// });	
 // this is the all.get to render the results trigger by the search word
-app.get('/searchresults', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
- 		client.query('SELECT name FROM food_drinks UNION SELECT name FROM getting_arounds UNION SELECT name FROM meeting_peoples', function (err, result){
- 			done();
- 			for (var i = 0; i < result.rows.length; i++){
-			if (result.rows[i].name == 'akejrg') {
- 				//console.log('YES');
- 				console.log(result.rows[i].name)
- 			} else {
- 				console.log('no app found');
- 			}
- 			}
- 			var data = {
- 				allTables : result.rows
- 			}
- 			res.render('results', data);
- 		});
- 	});
-});
-//above is the search bar for attempt #1
-app.get('/food_drinks', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM food_drinks', function (err, result){
-			done();
-			var data = {
-				food_drinks : result.rows
-			};
-			res.render('food_drinks', data);
-		});
-	});
-});
-app.get('/food_drinks/mainpage/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		// var apple = parseInt(req.params.id) + 1
-		client.query('SELECT * FROM food_drinks WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('food_drinks_mainpage', data);
-			console.log(req.query)
-		});
-	});
-});
-app.get('/food_drinks/edit/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-
-		client.query('SELECT * FROM food_drinks WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('food_drinks_edit', data);
-		});
-	});
-});
-app.put('/food_drinks/:id', function (req, res){
-	var id = req.params.id;
-	var name = req.body.name;
-	var description = req.body.description;
-	var features = req.body.features;
-	var author = req.body.author;
-	pg.connect(connectionString, function (err, client, done) {
-		client.query('UPDATE food_drinks SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', [name, description, features, author, id], function (err, result){
-			done();
-			res.redirect('/food_drinks')
-		});
-	});
-});
-app.get('/getting_arounds', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM getting_arounds', function (err, result){
-			done();
-			var data = {
-				getting_arounds : result.rows
-			};
-			res.render('getting_arounds', data);
-		});
-	});
-});
-app.get('/getting_arounds/mainpage/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM getting_arounds WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('getting_arounds_mainpage', data);
-		});
-	});
-});
-app.get('/getting_arounds/edit/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM getting_arounds WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('getting_arounds_edit', data);
-		});
-	});
-});
-app.put('/getting_arounds/:id', function (req, res){
-	var id = req.params.id;
-	var name = req.body.name;
-	var description = req.body.description;
-	var features = req.body.features;
-	var author = req.body.author;	
-	pg.connect(connectionString, function (err, client, done){
-		client.query('UPDATE getting_arounds SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', [name, description, features, author, id], function (err, result){
-			done();
-			res.redirect('/getting_arounds');
-		});
-	});
-});
-app.get('/meeting_peoples', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM meeting_peoples', function (err, result){
-			done();
-			var data = {
-				meeting_peoples : result.rows
-			};
-			res.render('meeting_peoples', data);
-		});
-	});
-});
-app.get('/meeting_peoples/mainpage/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM meeting_peoples WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('meeting_peoples_mainpage', data);
-		});
-	});
-});
-app.get('/meeting_peoples/edit/:id', function (req, res){
-	pg.connect(connectionString, function (err, client, done){
-		client.query('SELECT * FROM meeting_peoples WHERE id=$1', [req.params.id], function (err, result){
-			done();
-			var data = result.rows[0];
-			res.render('meeting_peoples_edit', data);
-		});
-	});
-});
-app.put('/meeting_peoples/:id', function (req, res){
-	var id = req.params.id;
-	var name = req.body.name;
-	var description = req.body.description;
-	var features = req.body.features;
-	var author = req.body.author;
-	pg.connect(connectionString, function (err, client, done) {
-		client.query(
-			'UPDATE meeting_peoples SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', 
-			[name, description, features, author, id], 
-			function (err, result){
-				done();
-			var payload  = new sendgrid.Email({
-			  to      : 'kenneth_yee2@yahoo.com',
-			  from    : 'kenneth_yee2@yahoo.com',
-			  subject : 'Saying Hi',
-			  text    : 'This is my first email through SendGrid'
-			});
-			sendgrid.send(payload, function(err, json) {
-			  if (err) { console.error(err); }
-			  console.log(json);
-			});	
-			res.redirect('/meeting_peoples');
-			}
-		);
-	});
-});
-
-
+// app.get('/searchresults', function (req, res){
+// 	pg.connect(connectionString, function (err, client, done){
+//  		client.query('SELECT name FROM food_drinks UNION SELECT name FROM getting_arounds UNION SELECT name FROM meeting_peoples', function (err, result){
+//  			done();
+//  			for (var i = 0; i < result.rows.length; i++){
+// 			if (result.rows[i].name == 'akejrg') {
+//  				//console.log('YES');
+//  				console.log(result.rows[i].name)
+//  			} else {
+//  				console.log('no app found');
+//  			}
+//  			}
+//  			var data = {
+//  				allTables : result.rows
+//  			}
+//  			res.render('results', data);
+//  		});
+//  	});
+// });
 
 
 
