@@ -16,8 +16,8 @@ The application is an internally facing wikipedia page for my hypothetical custo
 Each article page has detailed information that you can edit and save. New articles can be written and categorized.
 
 Challenges/Unsolved problems
-1. Need to create search bar
-2. Need better styling
+- Need to create search bar
+- Need better styling
 
 Wireframe:
 https://moqups.com/#!/edit/kenneffy/W0FkftR0
