@@ -18,9 +18,11 @@ Each article page has detailed information that you can edit and save. New artic
 Challenges/Unsolved problems
 - Need to create search bar
 - Need better styling
+- Dryer code
 
 Wireframe:
 https://moqups.com/#!/edit/kenneffy/W0FkftR0
 
 Userstory:
 https://trello.com/b/NDi1LDkl/wikiapps
+
