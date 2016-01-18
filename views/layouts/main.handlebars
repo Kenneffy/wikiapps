@@ -1,33 +1,24 @@
 <!DOCTYPE>
 <html>
 <head>
-	<title>WikiApps</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="/app.js"></script>
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 	<nav>
-		<h4><a href="/">WikiApps</a></h4>
+		<h1><a href="/">KnowledgeTree</a></h1>
 		<ul>
 			<li><a href="/food_drinks">Food | Drinks</a></li>
 			<li><a href="/getting_arounds">Getting Around</a></li>
 			<li><a href="/meeting_peoples">Meeting People</a></li>
-		</ul>
-		<h1><a href="/newarticle">New Article</a></h1>	
-	</nav>	
-
+		</ul>	
+	</nav> 
+		
 	{{{body}}}
 
-		<div id="searchbar">
-			<form action="/searchbar" method="POST"> 
-			<input type="hidden" name="_method" value="PUT">
-			<input type="text" name="search" placeholder="search">
-			<input type="submit" id="search" value="submit">
-			</form>
-		</div>	
-
-
-
+	<p class="newArticle"><a href="/newarticle">Write a new article!</a></p>
+	<div class="photoTree">
+	</div>
 </body>
 </html>

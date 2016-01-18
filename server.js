@@ -4,7 +4,6 @@ var exphbs         = require('express-handlebars');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var pg             = require('pg');
-var sendgrid 	= require("sendgrid")("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", {localhost:3000});
 
 var app = express();
 
@@ -52,7 +51,7 @@ app.post('/newarticle', function (req, res){
 					res.redirect('/meeting_peoples')
 				});
 			});
-		} if (req.body.tablename == 'food_drinks') {
+		} else if (req.body.tablename == 'food_drinks') {
 			var name = req.body.name;
 			var description = req.body.description;
 			var features = req.body.features;
@@ -63,7 +62,7 @@ app.post('/newarticle', function (req, res){
 					res.redirect('/food_drinks')
 				});
 			});
-		} if (req.body.tablename == 'getting_arounds') {
+		} else if (req.body.tablename == 'getting_arounds') {
 			var name = req.body.name;
 			var description = req.body.description;
 			var features = req.body.features;
@@ -74,6 +73,8 @@ app.post('/newarticle', function (req, res){
 					res.redirect('/getting_arounds')
 				});
 			});
+		} else {
+			alert('nothing happened');
 		}
 });
 
@@ -98,7 +99,7 @@ app.get('/food_drinks/mainpage/:id', function (req, res){
 			done();
 			var data = result.rows[0];
 			res.render('food_drinks_mainpage', data);
-			console.log(req.query)
+			console.log(data);
 		});
 	});
 });
@@ -227,18 +228,7 @@ app.put('/meeting_peoples/:id', function (req, res){
 			'UPDATE meeting_peoples SET name=$1, description=$2, features=$3, author=$4 WHERE id=$5', 
 			[name, description, features, author, id], 
 			function (err, result){
-				done();
-			//trying to use sendgrid module
-			var payload  = new sendgrid.Email({
-			  to      : 'kenneth_yee2@yahoo.com',
-			  from    : 'kenneth_yee2@yahoo.com',
-			  subject : 'Saying Hi',
-			  text    : 'This is my first email through SendGrid'
-			});
-			sendgrid.send(payload, function(err, json) {
-			  if (err) { console.error(err); }
-			  console.log(json);
-			});	
+				done();	
 			res.redirect('/meeting_peoples');
 			}
 		);
@@ -246,53 +236,6 @@ app.put('/meeting_peoples/:id', function (req, res){
 });
 
 
-//Work on this in the future
-//Attempt to making search bar
-// app.put('/searchbar', function (req, res){
-// 	var search = req.body.search 
-	//pg.connect(connectionString, function (err, client, done) {
-		//client.query('SELECT * FROM food_drinks, getting_arounds, meeting_peoples', function (err, result){
-	  // 		 done();
-			// var data = {
-			// allTables : result.rows
-			// }
-			// res.render('result', data)
-	 	// 	}
-	// res.render('results', data)
-	// console.log(data)
-	// );
-	// });	
-	// if (search == 'apples'){
-	// 		res.redirect('searchresults', search)
-	// 	};
-	// Poo is the test value that works
-	// var poo = {
-	// 	doo : search
-	// }
-	// console.log(poo)
-	// console.log(search)
-	// res.redirect('/searchresults')
-// });	
-// this is the all.get to render the results trigger by the search word
-// app.get('/searchresults', function (req, res){
-// 	pg.connect(connectionString, function (err, client, done){
-//  		client.query('SELECT name FROM food_drinks UNION SELECT name FROM getting_arounds UNION SELECT name FROM meeting_peoples', function (err, result){
-//  			done();
-//  			for (var i = 0; i < result.rows.length; i++){
-// 			if (result.rows[i].name == 'akejrg') {
-//  				//console.log('YES');
-//  				console.log(result.rows[i].name)
-//  			} else {
-//  				console.log('no app found');
-//  			}
-//  			}
-//  			var data = {
-//  				allTables : result.rows
-//  			}
-//  			res.render('results', data);
-//  		});
-//  	});
-// });
 
 
 
