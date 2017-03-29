@@ -27,7 +27,9 @@ app.use(methodOverride(function (req, res) {
 // app.listen(3000);
 app.listen(process.env.PORT || 5000)
 
-var connectionString = "pg://localhost/wikiapps_db";
+// var connectionString = "pg://localhost/wikiapps_db";
+
+var connectionString = "postgres://qcpgcwgfapwfto:70b83e5880cdaab9d1b0356d57f92616051817b714d0fe518ac2b5aa12b24ee3@ec2-54-225-107-107.compute-1.amazonaws.com:5432/d487l3tvf6fd9d";
 
 //route for home page
 app.get('/', function (req, res){
