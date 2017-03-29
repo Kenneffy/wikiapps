@@ -24,7 +24,8 @@ app.use(methodOverride(function (req, res) {
 	}
 }));
 
-app.listen(3000);
+// app.listen(3000);
+app.listen(process.env.PORT || 5000)
 
 var connectionString = "pg://localhost/wikiapps_db";
 

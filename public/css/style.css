@@ -7,6 +7,7 @@ body {
 }
 h1, h2, h3, h3, ul, li, a, p, div {
 	color: #D8BFD8;
+	text-align: center
 }
 nav {
 	border-bottom: 10px solid #FF9999;
@@ -47,10 +48,15 @@ li a:hover {
 .newArticle {
 	font-size: 70px;
 	font-weight: bold;
-	padding-left: 130px;
+	display: inline;
+
 }
 .newArticle a{
 	text-decoration: none;
+	text-align: left;
+	display: inline;
+	margin-top: 100px;
+
 }
 .photoTree {
 	position: absolute;
@@ -62,10 +68,6 @@ li a:hover {
 	height: 100%;
 	background: url(tree-sunset.jpg) no-repeat;
 }
-/*.niceTree img {
-	height: 100%;
-	left: 600px;
-}*/
 textarea {
 	display: inline;
 }
@@ -78,4 +80,8 @@ textarea {
 .cateHead {
 	font-size: 65px;
 }
+#newArticle {
+	text-align: left;
+}
+
 
